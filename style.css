@@ -1,0 +1,135 @@
+/* Global styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    overflow: hidden;
+}
+
+/* Dashboard container */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
+}
+
+/* Header style */
+.header {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Activity Indicator */
+.activity-indicator {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #ff0056, #ff6900);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+/* Typing effect */
+.typing {
+    font-family: 'Courier New', monospace;
+    font-size: 1.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 4px solid #ff0056;
+    width: 0;
+    animation: typing 4s steps(30, end) forwards, blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    50% { border-color: transparent; }
+}
+
+/* Data packet animation */
+.data-packet {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #00ffcc;
+    border-radius: 50%;
+    animation: move-packet 5s linear infinite;
+}
+
+@keyframes move-packet {
+    0% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(calc(100vw - 20px), calc(100vh - 20px));
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+}
+
+/* Network visualization nodes */
+.network-node {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ffcc00;
+    animation: network-bounce 3s infinite;
+}
+
+@keyframes network-bounce {
+    0%, 100% {
+        transform: translateY(0);
+        background: #ffcc00;
+    }
+    50% {
+        transform: translateY(-20px);
+        background: #ff0056;
+    }
+}
+
+/* Connecting lines */
+.line {
+    position: absolute;
+    width: 2px;
+    background: #282828;
+    animation: draw-line 4s linear infinite;
+}
+
+@keyframes draw-line {
+    0% {
+        height: 0;
+        opacity: 0;
+    }
+    50% {
+        height: 100px;
+        opacity: 1;
+    }
+    100% {
+        height: 0;
+        opacity: 0;
+    }
+}
+```

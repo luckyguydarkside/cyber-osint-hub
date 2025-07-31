@@ -8,25 +8,39 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div id="dashboard-container">
-        <h1>OSINT Dashboard</h1>
-        <div class="terminal">
-            <pre>
-> Welcome to the OSINT terminal
-> Enter your commands below:
-            </pre>
-        </div>
-        <div class="data-graph">
-            <h2>Data Graph</h2>
-            <div class="bar" style="height: 70%;"></div>
-            <div class="bar" style="height: 50%;"></div>
-            <div class="bar" style="height: 90%;"></div>
-        </div>
-        <div class="data-packets">
-            <div class="packet"></div>
-            <div class="packet"></div>
-            <div class="packet"></div>
-        </div>
+    <div id="cyber-dashboard">
+        <header>
+            <h1>OSINT Cybersecurity Dashboard</h1>
+            <p>Explore the world of Open Source Intelligence</p>
+        </header>
+        
+        <section class="terminal">
+            <h2>Simulated Terminal</h2>
+            <pre id="terminal-output">Welcome to your OSINT terminal...</pre>
+        </section>
+
+        <section class="data-visualization">
+            <h2>Dynamic Data Visualization</h2>
+            <div class="chart" id="animated-chart">
+                <div class="bar" style="height: 70%; animation-delay: 0s;"></div>
+                <div class="bar" style="height: 40%; animation-delay: 0.2s;"></div>
+                <div class="bar" style="height: 90%; animation-delay: 0.4s;"></div>
+                <div class="bar" style="height: 60%; animation-delay: 0.6s;"></div>
+            </div>
+        </section>
+
+        <section class="network-map">
+            <h2>Network Map</h2>
+            <div class="network-node" style="top: 20%; left: 30%;">Node A</div>
+            <div class="network-node" style="top: 50%; left: 50%;">Node B</div>
+            <div class="network-node" style="top: 70%; left: 20%;">Node C</div>
+            <div class="network-node" style="top: 10%; left: 80%;">Node D</div>
+        </section>
+
+        <section class="encryption">
+            <h2>Encryption/Decryption Simulation</h2>
+            <div class="encryption-effect" id="encryption-effect">Encrypting...</div>
+        </section>
     </div>
 </body>
 </html>

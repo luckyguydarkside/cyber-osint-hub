@@ -1,145 +1,148 @@
-/* Main container styling */
+/* Cyber Dashboard Main Container */
 #cyber-dashboard {
-    background-color: #121212;
+    background-color: #0e0e0e;
     color: #ffffff;
     font-family: 'Courier New', Courier, monospace;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
     overflow: hidden;
     position: relative;
+    height: 100vh;
 }
 
-/* Fluidly moving data packets animation */
-@keyframes move-data-packet {
-    0% {
-        transform: translate(-100%, -100%);
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        transform: translate(100%, 100%);
-        opacity: 0;
-    }
-}
-
-.data-packet {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background-color: #00ff00;
-    border-radius: 50%;
-    animation: move-data-packet 4s linear infinite;
-}
-
-/* Pulsating activity indicator */
+/* Pulsating Activity Indicator */
 .activity-indicator {
     width: 20px;
     height: 20px;
-    background-color: #ff007f;
+    background: linear-gradient(135deg, #00ffcc, #ff005d);
     border-radius: 50%;
-    animation: pulsate 1.5s ease-in-out infinite;
+    animation: pulse 1.5s infinite ease-in-out;
+    position: absolute;
+    top: 20px;
+    right: 20px;
 }
 
-@keyframes pulsate {
+@keyframes pulse {
     0%, 100% {
         transform: scale(1);
         opacity: 0.7;
     }
     50% {
-        transform: scale(1.5);
+        transform: scale(1.2);
         opacity: 1;
     }
 }
 
-/* Dynamic typing effect in a terminal */
+/* Typing Effect Animation in Terminal */
 .typing-effect {
-    font-size: 18px;
+    font-family: 'Courier New', Courier, monospace;
     white-space: nowrap;
     overflow: hidden;
-    border-right: 3px solid #00ff00;
+    border-right: 3px solid #00ffcc;
+    width: 0;
     animation: typing 4s steps(30, end), blink-caret 0.75s step-end infinite;
 }
 
 @keyframes typing {
-    from {
-        width: 0;
-    }
-    to {
-        width: 100%;
-    }
+    from { width: 0; }
+    to { width: 100%; }
 }
 
 @keyframes blink-caret {
-    from, to {
-        border-color: transparent;
-    }
-    50% {
-        border-color: #00ff00;
-    }
+    50% { border-color: transparent; }
 }
 
-/* Abstract network visualization with animated nodes and connecting lines */
-.network {
-    position: relative;
-}
-
-.node {
-    width: 12px;
-    height: 12px;
-    background-color: #00ccff;
-    border-radius: 50%;
+/* Data Packet Animation */
+.data-packet {
     position: absolute;
-    animation: node-animation 5s infinite;
+    width: 10px;
+    height: 10px;
+    background-color: #00ffcc;
+    border-radius: 50%;
+    animation: move-data-packet 5s infinite;
 }
 
-@keyframes node-animation {
-    0%, 100% {
-        transform: scale(1);
+@keyframes move-data-packet {
+    0% {
+        transform: translate(0, 0);
         opacity: 1;
     }
     50% {
-        transform: scale(1.5);
+        transform: translate(100vw, 100vh);
         opacity: 0.5;
     }
+    100% {
+        transform: translate(-50vw, -50vh);
+        opacity: 0;
+    }
 }
 
-.line {
+/* Abstract Network Visualization */
+.network {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.network-node {
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.5);
-    height: 2px;
-    animation: line-wave 4s infinite;
+    width: 15px;
+    height: 15px;
+    background-color: #ff005d;
+    border-radius: 50%;
+    animation: node-movement 10s infinite ease-in-out;
 }
 
-@keyframes line-wave {
+@keyframes node-movement {
     0% {
-        transform: scaleX(0);
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(50vw, 30vh);
     }
     50% {
-        transform: scaleX(1);
+        transform: translate(25vw, 70vh);
+    }
+    75% {
+        transform: translate(-25vw, 50vh);
     }
     100% {
-        transform: scaleX(0);
+        transform: translate(0, 0);
     }
 }
 
-/* General styling for other elements */
-h1, h2, h3 {
-    text-shadow: 0 0 5px rgba(0, 255, 255, 0.9);
+.network-line {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, #00ffcc, #ff005d);
+    animation: draw-line 3s infinite ease-in-out;
 }
 
+@keyframes draw-line {
+    0% {
+        width: 0;
+    }
+    50% {
+        width: 100%;
+    }
+    100% {
+        width: 0;
+    }
+}
+
+/* Additional Styles for User Interface Elements */
 .button {
-    background-color: #00ff00;
-    color: #121212;
-    padding: 10px 20px;
+    background-color: #1a1a1a;
+    color: #00ffcc;
     border: none;
     border-radius: 5px;
+    padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 .button:hover {
-    background-color: #00cc00;
+    background-color: rgba(0, 255, 204, 0.1);
 }

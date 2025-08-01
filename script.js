@@ -1,45 +1,47 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const terminalOutput = document.getElementById('terminal-output');
-    const cursor = document.createElement('span');
-    cursor.innerHTML = '|';
-    cursor.className = 'blinking-cursor';
-    terminalOutput.appendChild(cursor);
+// Simple OSINT Dashboard Enhancer
+const terminalOutput = document.getElementById('terminalOutput');
+const cursor = document.createElement('span');
+cursor.className = 'cursor';
+cursor.textContent = '|';
+terminalOutput.appendChild(cursor);
 
-    const commands = [
-        'Initializing OSINT tool...',
-        'Scanning networks...',
-        'Gathering data...',
-        'Analysis complete: 5 vulnerabilities found.',
-        'Generating report...'
-    ];
-    
-    let index = 0;
-    
-    function typeCommand() {
-        if (index < commands.length) {
-            terminalOutput.innerHTML += `<div>${commands[index]}</div>`;
-            index++;
-            setTimeout(typeCommand, 2000);
-        } else {
-            cursor.style.display = 'none';
-        }
+const commands = [
+    "Scanning for open ports...",
+    "Collecting metadata from websites...",
+    "Fetching DNS records...",
+    "Analyzing network traffic...",
+    "Gathering geographical data..."
+];
+
+let commandIndex = 0;
+
+function typeCommand() {
+    if (commandIndex < commands.length) {
+        let command = commands[commandIndex];
+        terminalOutput.innerHTML += `<div>${command}</div>`;
+        commandIndex++;
+        setTimeout(typeCommand, 2000);
+    } else {
+        cursor.style.display = 'none'; // Hide cursor after commands
     }
+}
 
-    typeCommand();
+function toggleCursor() {
+    cursor.style.visibility = (cursor.style.visibility === 'hidden') ? 'visible' : 'hidden';
+}
 
-    const dynamicData = document.getElementById('dynamic-data');
-    const updateButton = document.getElementById('update-button');
-    
-    updateButton.addEventListener('click', () => {
-        const randomData = Math.floor(Math.random() * 100);
-        dynamicData.innerHTML = `Latest Threat Level: ${randomData}`;
-    });
+setInterval(toggleCursor, 500);
+typeCommand();
 
-    setInterval(() => {
-        const date = new Date();
-        document.getElementById('timestamp').innerHTML = `Last updated: ${date.toLocaleTimeString()}`;
-    }, 5000);
+// Dynamic data visualization
+const updateDataButton = document.getElementById('updateData');
+const dataDisplay = document.getElementById('dataDisplay');
+
+updateDataButton.addEventListener('click', () => {
+    const newData = Math.floor(Math.random() * 100);
+    dataDisplay.textContent = `Current Threat Level: ${newData}`;
+    dataDisplay.style.color = newData > 70 ? 'red' : 'green';
 });
 ```
 
-To use this script, ensure you have a corresponding HTML structure with elements having IDs `terminal-output`, `dynamic-data`, `update-button`, and `timestamp`.
+Make sure you include an HTML structure that has elements with the IDs `terminalOutput`, `updateData`, and `dataDisplay` for the above JavaScript to work effectively.

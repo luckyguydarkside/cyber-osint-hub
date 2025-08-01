@@ -2,66 +2,60 @@ import requests
 from urllib.parse import urlparse
 import json
 
-def get_http_headers(url):
+def fetch_http_headers(url):
     """
-    Function to retrieve HTTP headers from a given URL.
+    Fetch HTTP headers from a given URL.
     
     Parameters:
-    url (str): The URL from which to fetch the headers.
+    - url (str): The URL from which to fetch headers.
     
     Returns:
-    dict: A dictionary containing HTTP headers.
+    - headers (dict): A dictionary of HTTP headers.
     """
     try:
         response = requests.get(url)
-        # Return the headers as a dictionary
         return response.headers
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching headers: {e}")
-        return None
+    except requests.RequestException as e:
+        print(f"Error fetching headers from {url}: {e}")
+        return {}
 
-def analyze_headers(headers):
+def parse_url(url):
     """
-    Function to analyze HTTP headers for common security vulnerabilities.
+    Parse the URL to extract its components.
     
     Parameters:
-    headers (dict): A dictionary of HTTP headers.
+    - url (str): The URL to parse.
     
     Returns:
-    dict: A dictionary containing analysis results.
+    - components (dict): A dictionary of URL components.
     """
-    analysis = {}
-    
-    # Check for security-related headers
-    security_headers = ['X-Content-Type-Options', 'X-Frame-Options', 'X-XSS-Protection', 'Strict-Transport-Security']
-    for header in security_headers:
-        analysis[header] = 'Present' if header in headers else 'Missing'
-    
-    # Check for Content-Type header
-    if 'Content-Type' in headers:
-        analysis['Content-Type'] = headers['Content-Type']
-    else:
-        analysis['Content-Type'] = 'Missing'
-    
-    return analysis
+    parsed = urlparse(url)
+    return {
+        "scheme": parsed.scheme,
+        "netloc": parsed.netloc,
+        "path": parsed.path,
+        "params": parsed.params,
+        "query": parsed.query,
+        "fragment": parsed.fragment
+    }
 
 def main():
-    url = input("Enter a URL to analyze (e.g., https://example.com): ")
-    parsed_url = urlparse(url)
+    """
+    Main function to run the OSINT tool.
+    """
+    target_url = input("Enter a URL to analyze (e.g., https://example.com): ")
     
-    if not parsed_url.scheme:
-        print("Please include the scheme (http:// or https://)")
-        return
-    
-    headers = get_http_headers(url)
-    
+    # Fetch HTTP headers
+    headers = fetch_http_headers(target_url)
     if headers:
         print("\nHTTP Headers:")
-        print(json.dumps(headers, indent=4))
-        
-        print("\nSecurity Header Analysis:")
-        analysis = analyze_headers(headers)
-        print(json.dumps(analysis, indent=4))
+        for key, value in headers.items():
+            print(f"{key}: {value}")
+
+    # Parse URL
+    components = parse_url(target_url)
+    print("\nParsed URL Components:")
+    print(json.dumps(components, indent=4))
 
 if __name__ == "__main__":
     main()

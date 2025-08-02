@@ -2,60 +2,69 @@ import requests
 from urllib.parse import urlparse
 import json
 
-def fetch_http_headers(url):
+def get_http_headers(url):
     """
-    Fetch HTTP headers from a given URL.
-    
-    Parameters:
-    - url (str): The URL from which to fetch headers.
-    
-    Returns:
-    - headers (dict): A dictionary of HTTP headers.
+    Fetch the HTTP headers from a given URL.
+
+    :param url: The URL from which to fetch headers.
+    :return: A dictionary of HTTP headers.
     """
     try:
         response = requests.get(url)
         return response.headers
     except requests.RequestException as e:
-        print(f"Error fetching headers from {url}: {e}")
+        print(f"Error fetching headers: {e}")
         return {}
 
-def parse_url(url):
+def analyze_headers(headers):
     """
-    Parse the URL to extract its components.
-    
-    Parameters:
-    - url (str): The URL to parse.
-    
-    Returns:
-    - components (dict): A dictionary of URL components.
+    Analyze HTTP headers for security-related information.
+
+    :param headers: A dictionary of HTTP headers.
+    :return: A summary of security-related findings.
     """
-    parsed = urlparse(url)
-    return {
-        "scheme": parsed.scheme,
-        "netloc": parsed.netloc,
-        "path": parsed.path,
-        "params": parsed.params,
-        "query": parsed.query,
-        "fragment": parsed.fragment
-    }
+    security_headers = [
+        'Strict-Transport-Security',
+        'Content-Security-Policy',
+        'X-Content-Type-Options',
+        'X-Frame-Options',
+        'X-XSS-Protection'
+    ]
+    
+    findings = {}
+    for header in security_headers:
+        findings[header] = headers.get(header, 'Missing')
+    
+    return findings
 
 def main():
     """
-    Main function to run the OSINT tool.
+    Main function to run the OSINT HTTP header analysis.
+    Prompts user for a URL and outputs security header analysis.
     """
-    target_url = input("Enter a URL to analyze (e.g., https://example.com): ")
+    url = input("Enter the URL to analyze (e.g., https://example.com): ")
     
-    # Fetch HTTP headers
-    headers = fetch_http_headers(target_url)
+    # Parse the URL to ensure it's valid
+    parsed_url = urlparse(url)
+    if not all([parsed_url.scheme, parsed_url.netloc]):
+        print("Invalid URL. Please include the scheme (http/https).")
+        return
+    
+    print(f"Fetching HTTP headers for: {url}")
+    
+    # Get HTTP headers
+    headers = get_http_headers(url)
+    
     if headers:
-        print("\nHTTP Headers:")
-        for key, value in headers.items():
-            print(f"{key}: {value}")
-
-    # Parse URL
-    components = parse_url(target_url)
-    print("\nParsed URL Components:")
-    print(json.dumps(components, indent=4))
+        print("HTTP Headers retrieved successfully.")
+        print(json.dumps(headers, indent=4))  # Print all headers for reference
+        
+        # Analyze the headers for security-related information
+        findings = analyze_headers(headers)
+        
+        print("\nSecurity Header Analysis:")
+        for header, status in findings.items():
+            print(f"{header}: {status}")
 
 if __name__ == "__main__":
     main()

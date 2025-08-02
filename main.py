@@ -1,71 +1,62 @@
 import requests
+import argparse
 from urllib.parse import urlparse
-import json
 
-def get_http_headers(url):
+def fetch_http_headers(url):
     """
-    Fetch the HTTP headers from a given URL.
-
-    :param url: The URL from which to fetch headers.
-    :return: A dictionary of HTTP headers.
+    Fetches and returns the HTTP headers of a given URL.
+    :param url: The target URL to analyze.
+    :return: A dictionary containing HTTP headers.
     """
     try:
         response = requests.get(url)
+        # Return the HTTP headers as a dictionary
         return response.headers
     except requests.RequestException as e:
-        print(f"Error fetching headers: {e}")
-        return {}
+        print(f"Error fetching headers from {url}: {e}")
+        return None
 
 def analyze_headers(headers):
     """
-    Analyze HTTP headers for security-related information.
-
-    :param headers: A dictionary of HTTP headers.
-    :return: A summary of security-related findings.
+    Analyzes the HTTP headers and extracts key information.
+    :param headers: The HTTP headers to analyze.
+    :return: A summary of key header information.
     """
-    security_headers = [
-        'Strict-Transport-Security',
-        'Content-Security-Policy',
-        'X-Content-Type-Options',
-        'X-Frame-Options',
-        'X-XSS-Protection'
-    ]
-    
-    findings = {}
-    for header in security_headers:
-        findings[header] = headers.get(header, 'Missing')
-    
-    return findings
+    analysis = {
+        "Server": headers.get("Server", "N/A"),
+        "Content-Type": headers.get("Content-Type", "N/A"),
+        "Content-Length": headers.get("Content-Length", "N/A"),
+        "X-Powered-By": headers.get("X-Powered-By", "N/A"),
+        "Strict-Transport-Security": headers.get("Strict-Transport-Security", "N/A"),
+    }
+    return analysis
+
+def print_analysis(analysis):
+    """
+    Prints the analysis of HTTP headers in a readable format.
+    :param analysis: The analyzed header information.
+    """
+    print("\n--- HTTP Header Analysis ---")
+    for key, value in analysis.items():
+        print(f"{key}: {value}")
 
 def main():
-    """
-    Main function to run the OSINT HTTP header analysis.
-    Prompts user for a URL and outputs security header analysis.
-    """
-    url = input("Enter the URL to analyze (e.g., https://example.com): ")
-    
-    # Parse the URL to ensure it's valid
-    parsed_url = urlparse(url)
-    if not all([parsed_url.scheme, parsed_url.netloc]):
-        print("Invalid URL. Please include the scheme (http/https).")
+    # Set up argument parsing
+    parser = argparse.ArgumentParser(description="Analyze HTTP Headers of a URL.")
+    parser.add_argument("url", help="The URL to analyze (e.g., http://example.com)")
+    args = parser.parse_args()
+
+    # Parse the input URL
+    parsed_url = urlparse(args.url)
+    if not parsed_url.scheme:
+        print("Please provide a valid URL with scheme (http/https).")
         return
-    
-    print(f"Fetching HTTP headers for: {url}")
-    
-    # Get HTTP headers
-    headers = get_http_headers(url)
-    
+
+    # Fetch and analyze HTTP headers
+    headers = fetch_http_headers(args.url)
     if headers:
-        print("HTTP Headers retrieved successfully.")
-        print(json.dumps(headers, indent=4))  # Print all headers for reference
-        
-        # Analyze the headers for security-related information
-        findings = analyze_headers(headers)
-        
-        print("\nSecurity Header Analysis:")
-        for header, status in findings.items():
-            print(f"{header}: {status}")
+        analysis = analyze_headers(headers)
+        print_analysis(analysis)
 
 if __name__ == "__main__":
     main()
-```

@@ -1,148 +1,140 @@
-/* Cyber Dashboard Main Container */
-#cyber-dashboard {
+body {
     background-color: #0e0e0e;
     color: #ffffff;
     font-family: 'Courier New', Courier, monospace;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+    margin: 0;
     overflow: hidden;
-    position: relative;
-    height: 100vh;
 }
 
-/* Pulsating Activity Indicator */
-.activity-indicator {
+#cyber-dashboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+}
+
+.pulsating-indicator {
     width: 20px;
     height: 20px;
-    background: linear-gradient(135deg, #00ffcc, #ff005d);
     border-radius: 50%;
-    animation: pulse 1.5s infinite ease-in-out;
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    background: #ff007f;
+    box-shadow: 0 0 20px rgba(255, 0, 127, 0.5);
+    animation: pulse 1.5s infinite;
 }
 
 @keyframes pulse {
-    0%, 100% {
+    0% {
         transform: scale(1);
-        opacity: 0.7;
+        opacity: 1;
     }
     50% {
-        transform: scale(1.2);
+        transform: scale(1.5);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(1);
         opacity: 1;
     }
 }
 
-/* Typing Effect Animation in Terminal */
 .typing-effect {
-    font-family: 'Courier New', Courier, monospace;
+    font-size: 24px;
     white-space: nowrap;
     overflow: hidden;
-    border-right: 3px solid #00ffcc;
+    border-right: 4px solid #00ffea;
     width: 0;
-    animation: typing 4s steps(30, end), blink-caret 0.75s step-end infinite;
+    animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite;
 }
 
 @keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
 }
 
 @keyframes blink-caret {
-    50% { border-color: transparent; }
+    50% {
+        border-color: transparent;
+    }
 }
 
-/* Data Packet Animation */
 .data-packet {
     position: absolute;
     width: 10px;
     height: 10px;
-    background-color: #00ffcc;
+    background-color: #00ffea;
     border-radius: 50%;
-    animation: move-data-packet 5s infinite;
+    animation: move-data 5s linear infinite;
 }
 
-@keyframes move-data-packet {
+@keyframes move-data {
     0% {
-        transform: translate(0, 0);
-        opacity: 1;
+        transform: translate(-100px, 50px);
     }
     50% {
-        transform: translate(100vw, 100vh);
-        opacity: 0.5;
+        transform: translate(100vw, -50px);
     }
     100% {
-        transform: translate(-50vw, -50vh);
-        opacity: 0;
+        transform: translate(-100px, 50px);
     }
 }
 
-/* Abstract Network Visualization */
-.network {
+.network-container {
     position: relative;
     width: 100%;
     height: 100%;
-    overflow: hidden;
 }
 
-.network-node {
+.node {
     position: absolute;
-    width: 15px;
-    height: 15px;
-    background-color: #ff005d;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    animation: node-movement 10s infinite ease-in-out;
+    background: #ff007f;
+    animation: node-bounce 2s infinite;
 }
 
-@keyframes node-movement {
-    0% {
-        transform: translate(0, 0);
-    }
-    25% {
-        transform: translate(50vw, 30vh);
+@keyframes node-bounce {
+    0%, 100% {
+        transform: translateY(0);
     }
     50% {
-        transform: translate(25vw, 70vh);
-    }
-    75% {
-        transform: translate(-25vw, 50vh);
-    }
-    100% {
-        transform: translate(0, 0);
+        transform: translateY(-15px);
     }
 }
 
-.network-line {
+.line {
     position: absolute;
-    height: 2px;
-    background: linear-gradient(90deg, #00ffcc, #ff005d);
-    animation: draw-line 3s infinite ease-in-out;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.5);
+    animation: line-draw 2s ease-in-out infinite;
 }
 
-@keyframes draw-line {
+@keyframes line-draw {
     0% {
-        width: 0;
+        height: 0;
     }
     50% {
-        width: 100%;
+        height: 100px;
     }
     100% {
-        width: 0;
+        height: 0;
     }
 }
 
-/* Additional Styles for User Interface Elements */
-.button {
-    background-color: #1a1a1a;
-    color: #00ffcc;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+@media (max-width: 768px) {
+    #cyber-dashboard {
+        padding: 10px;
+    }
 
-.button:hover {
-    background-color: rgba(0, 255, 204, 0.1);
+    .typing-effect {
+        font-size: 18px;
+    }
 }

@@ -3,46 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSINT Cyber Dashboard</title>
+    <title>OSINT Cybersecurity Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
     <div id="cyber-dashboard">
         <header>
-            <h1>OSINT Cyber Dashboard</h1>
+            <h1>OSINT Cybersecurity Dashboard</h1>
         </header>
-        <section id="simulated-terminal" class="dashboard-section">
+        
+        <section class="terminal">
             <h2>Simulated Terminal</h2>
-            <pre id="terminal-output">Welcome to the OSINT Terminal...
-$ ls
-- reports
-- datasets
-- analytics
-</pre>
-        </section>
-        <section id="data-visualization" class="dashboard-section">
-            <h2>Dynamic Data Visualizations</h2>
-            <div class="chart">
-                <div class="bar" style="height: 70%;" data-label="Phishing Attacks"></div>
-                <div class="bar" style="height: 50%;" data-label="Malware Incidents"></div>
-                <div class="bar" style="height: 30%;" data-label="Data Breaches"></div>
+            <div class="terminal-window">
+                <pre id="terminal-output">Loading...</pre>
             </div>
         </section>
-        <section id="network-map" class="dashboard-section">
-            <h2>Network Map</h2>
-            <div class="network-node" style="top: 20%; left: 30%;">Node A</div>
-            <div class="network-node" style="top: 40%; left: 50%;">Node B</div>
-            <div class="network-node" style="top: 70%; left: 20%;">Node C</div>
+        
+        <section class="data-visualization">
+            <h2>Dynamic Data Visualizations</h2>
+            <div class="chart">
+                <div class="bar" style="height: 70%;" data-title="Data Breaches"></div>
+                <div class="bar" style="height: 50%;" data-title="Phishing Attacks"></div>
+                <div class="bar" style="height: 90%;" data-title="Malware Incidents"></div>
+                <div class="bar" style="height: 30%;" data-title="DDoS Attacks"></div>
+            </div>
         </section>
-        <section id="encryption-decryption" class="dashboard-section">
-            <h2>Encryption/Decryption Simulation</h2>
-            <div id="encryption-box">
-                <input type="text" id="input-text" placeholder="Enter text to encrypt...">
-                <button id="encrypt-btn">Encrypt</button>
-                <p id="encrypted-output"></p>
+
+        <section class="network-map">
+            <h2>Network Map</h2>
+            <div class="network-container">
+                <div class="node" style="top: 20%; left: 30%;">Node A</div>
+                <div class="node" style="top: 50%; left: 70%;">Node B</div>
+                <div class="node" style="top: 80%; left: 20%;">Node C</div>
+                <div class="node" style="top: 40%; left: 50%;">Node D</div>
+            </div>
+        </section>
+
+        <section class="encryption-effect">
+            <h2>Encryption / Decryption Effect</h2>
+            <div class="encryption-box">
+                <p id="encryption-text">Secret Message</p>
+                <button id="toggle-encryption">Encrypt</button>
             </div>
         </section>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>

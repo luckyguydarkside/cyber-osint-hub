@@ -1,60 +1,41 @@
-// OSINT Dashboard Interactive Script
-const terminalOutput = document.getElementById('terminal-output');
+const terminalOutput = document.getElementById('terminalOutput');
 const cursor = document.getElementById('cursor');
-const dataVisual = document.getElementById('data-visual');
+const dataVisualization = document.getElementById('dataVisualization');
+let outputIndex = 0;
 
-let outputLines = [
+const commands = [
     "Fetching OSINT data...",
-    "Analyzing IP address...",
-    "Gathering social media footprints...",
-    "Scanning public records...",
+    "Analyzing packets...",
+    "Scanning for vulnerabilities...",
     "Data retrieval complete!",
-    "Visualizing results..."
+    "Generating report..."
 ];
 
-let index = 0;
-
-function typeWriterEffect(line, callback) {
-    let i = 0;
-    const interval = setInterval(() => {
-        if (i < line.length) {
-            terminalOutput.innerHTML += line.charAt(i);
-            i++;
-        } else {
-            clearInterval(interval);
-            setTimeout(callback, 1000); // Wait before next line
-        }
-    }, 100);
-}
-
+// Simulate terminal output with a blinking cursor
 function simulateTerminal() {
-    if (index < outputLines.length) {
-        typeWriterEffect(outputLines[index], () => {
-            index++;
-            simulateTerminal();
-        });
+    if (outputIndex < commands.length) {
+        terminalOutput.innerHTML += `<div>${commands[outputIndex]}</div>`;
+        outputIndex++;
+        setTimeout(simulateTerminal, 2000);
     } else {
-        displayVisualization();
+        cursor.style.visibility = cursor.style.visibility === 'visible' ? 'hidden' : 'visible';
+        setInterval(() => cursor.style.visibility = cursor.style.visibility === 'visible' ? 'hidden' : 'visible', 500);
     }
 }
 
-function displayVisualization() {
-    terminalOutput.innerHTML += "<br>✔ All tasks completed!";
-    dataVisual.style.display = 'block';
-    // Simulate dynamic data visualization update
-    setInterval(() => {
-        dataVisual.innerHTML = `Updated Data: ${Math.floor(Math.random() * 100)}`;
-    }, 2000);
+// Update data visualization dynamically
+function updateVisualization() {
+    const randomData = Math.floor(Math.random() * 100);
+    dataVisualization.style.height = `${randomData}%`;
+    dataVisualization.innerHTML = `${randomData}% detected threats`;
+    setTimeout(updateVisualization, 3000);
 }
 
-function blinkCursor() {
-    setInterval(() => {
-        cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
-    }, 500);
-}
-
+// Start terminal simulation and visualization
 document.addEventListener('DOMContentLoaded', () => {
     simulateTerminal();
-    blinkCursor();
+    updateVisualization();
 });
 ```
+
+Make sure to have HTML elements with IDs `terminalOutput`, `cursor`, and `dataVisualization` for the JavaScript to interact with.
